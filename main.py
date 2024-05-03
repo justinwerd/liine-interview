@@ -34,7 +34,7 @@ def get_open_restaurants(date):
         return '''Error: Invalid Date
                 Make sure the date is in the format YYYY-mm-ddTHH:MM''', 400
 
-# Used with the functions above to add formatted hour data to mongodb instance
+# Used with the date_time_parse functions to add formatted hour data to mongodb instance
 # def create_hours_collection():
 #     mydoc = mycol.find({})
 #     data = [x for x in mydoc]
