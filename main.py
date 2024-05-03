@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient["liine-interviews"]
-mycol = mydb["restaurants"]
+mycol = mydb["restaurants"] 
 
 @app.route('/get-open-restaurants/<date>')
 def get_open_restaurants(date):

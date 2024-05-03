@@ -47,7 +47,7 @@ def parse_time(time):
     start_time = datetime.datetime.strptime(start, "%H:%M").time()
     end_time = datetime.datetime.strptime(end, "%H:%M").time()
 
-    return start_time.hour,start_time.minute,end_time.hour,end_time.minute
+    return start_time.hour,start_time.minute,end_time.hour,end_time.minute 
 
 def parse_date_range_plus(date_range,time):
     range_and_day = date_range.split(',') 
