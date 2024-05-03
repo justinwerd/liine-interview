@@ -1,11 +1,7 @@
 import unittest
-from pprint import pprint
 from main import get_open_restaurants,app
 
 class Tests(unittest.TestCase):
-
-
-
     def test_get_open_restaurants(self):
         
         test_data1 = [
@@ -110,8 +106,6 @@ class Tests(unittest.TestCase):
             self.assertEqual(error_res[0], '''Error: Invalid Date
                 Make sure the date is in the format YYYY-mm-ddTHH:MM''')
             self.assertEqual(error_res[1], 400)
-
-    
 
 if __name__ == '__main__':
     unittest.main()
