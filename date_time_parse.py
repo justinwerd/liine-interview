@@ -3,10 +3,6 @@ import re
 import datetime
 
 
-def break_down_hours(hours_string):
-    hours_arr = hours_string.split('/')
-    hours_arr = [hours.strip() for hours in hours_arr]
-    return hours_arr
 day_map = {
     "Mon": 1,
     "Tues": 2,
@@ -17,9 +13,15 @@ day_map = {
     "Sun": 7,
 }
 
-def parse_days(date_range):
+def break_down_hours(hours_string):
+    hours_arr = hours_string.split('/')
+    hours_arr = [hours.strip() for hours in hours_arr]
+    return hours_arr
+
+def parse_date_range(date_range):
     i,j = date_range.split('-')
     return list(range(day_map[i],day_map[j]+1))
+
 def unabbreviate_time(time_str):
     if not time_str:
         return
@@ -49,32 +51,16 @@ def parse_time(time):
 
     return start_time.hour,start_time.minute,end_time.hour,end_time.minute 
 
-def parse_date_range_plus(date_range,time):
-    range_and_day = date_range.split(',') 
-    num_range = parse_days(range_and_day[0])
-    sep_day = day_map[range_and_day[1].strip()]
-    num_range.append(sep_day)
-    time_range = parse_time(time)
-    return num_range,time_range
-def parse_date_range(date_range,time):
-    print(date_range)
-    num_range = parse_days(date_range)
-    time_range = parse_time(time)
-    return num_range,time_range
-def parse_date_pattern(day1,time):
-    day = [day_map[day1]]
-    time_range = parse_time(time)
-    return day,time_range
-
-def parse_date(time,date_range=None,day=None):
+def parse_restaurant_hours(time,date_range=None,day=None):
     time_range = parse_time(time)
     num_range = []
     if date_range:
-        num_range.extend(parse_days(date_range))
+        num_range.extend(parse_date_range(date_range))
     if day:
         num_range.append(day_map[day])
     return num_range,time_range
-def find_date_range(text):
+
+def find_restaurant_hours(text):
     day_range_day_reg = '[A-Za-z]{2,}-[A-Za-z]{2,}, [A-Za-z]{2,}'
     day_day_range_reg = '[A-Za-z]{2,}, [A-Za-z]{2,}-[A-Za-z]{2,}'
     day_range_reg = '[A-Za-z]{2,}-[A-Za-z]{2,}'
@@ -90,17 +76,19 @@ def find_date_range(text):
         d = pattern1.match(text).group()
         range_and_day = d.split(',') 
         t = text[len(d):].strip()
-        return parse_date(time=t,date_range=range_and_day[0].strip(),day=range_and_day[1].strip())
-    if pattern2.match(text):
+        return parse_restaurant_hours(time=t,date_range=range_and_day[0].strip(),day=range_and_day[1].strip())
+    elif pattern2.match(text):
         d = pattern2.match(text).group()
         range_and_day = d.split(',') 
         t = text[len(d):].strip()
-        return parse_date(time=t,day=range_and_day[0].strip(),date_range=range_and_day[1].strip())
+        return parse_restaurant_hours(time=t,day=range_and_day[0].strip(),date_range=range_and_day[1].strip())
     elif pattern3.match(text):
         d = pattern3.match(text).group()
         t = text[len(d):].strip()
-        return parse_date(time=t,date_range=d)
+        return parse_restaurant_hours(time=t,date_range=d)
     elif pattern4.match(text):
         d = pattern4.match(text).group()
         t = text[len(d):].strip()
-        return parse_date(time=t,day=d)
+        return parse_restaurant_hours(time=t,day=d)
+    else:
+        raise Exception('String not found')
