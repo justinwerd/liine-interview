@@ -91,22 +91,4 @@ def find_restaurant_hours(text):
     else:
         raise Exception('String not found')
 
-# Used with the functions above to add formatted hour data to mongodb instance
-# def create_hours_collection():
-#     mydoc = mycol.find({})
-#     data = [x for x in mydoc]
-#     for d in data:
-#         restaurant_id = d['_id']
-#         restaurant_name = d['Restaurant Name']
-#         restaurant_hours = d['Hours']
-#         h = break_down_hours(restaurant_hours)
-#         for i in h:
-#             date_data = find_restaurant_hours(i)
-#             mydb.hours.insert_one({"restaurant_id": restaurant_id,
-#                                    "restaurant_name":restaurant_name,
-#                                    "date_range":date_data[0],
-#                                    "opening_hour":date_data[1][0], 
-#                                    "opening_minute":date_data[1][1], 
-#                                    "closing_hour": date_data[1][2],
-#                                    "closing_minute": date_data[1][3]}
-#                                    )
+
